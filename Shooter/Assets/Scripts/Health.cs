@@ -17,10 +17,15 @@ public class Health : MonoBehaviour
 
 		if (currentHealth <= 0)
 		{
-			// die
+			die ();
 		}
 		
 		healthChanged = true;
+	}
+
+	private void die()
+	{
+		Destroy (gameObject);
 	}
 
 	// Use this for initialization
@@ -41,7 +46,7 @@ public class Health : MonoBehaviour
 	{
 		if (healthChanged)
 		{
-			float healthSize = currentHealth / maxHealth;
+			float healthSize = (float)currentHealth / (float)maxHealth;
 
 			healthContainer.transform.localScale = new Vector3 (healthSize, 1, 1);
 			healthChanged = false;

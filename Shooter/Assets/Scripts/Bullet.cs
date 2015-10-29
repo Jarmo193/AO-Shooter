@@ -26,7 +26,10 @@ public class Bullet : MonoBehaviour
 
 	protected void DoDamage(GameObject target)
 	{
-
+		if(target.GetComponent<Health>() != null)
+		{
+			target.GetComponent<Health>().getDamage(Damage);
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other)
