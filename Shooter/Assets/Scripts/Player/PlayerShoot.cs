@@ -12,7 +12,7 @@ public class PlayerShoot : MonoBehaviour
 	public Transform rightTurret;
 	// Use this for initialization
 	void Start () {
-	
+
 	}
 	
 	// Update is called once per frame

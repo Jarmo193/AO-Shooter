@@ -10,7 +10,10 @@ public class PlayerInput : MonoBehaviour
 	{
 		if(Input.GetKey(KeyCode.Space))
 		{
-			shootScript.shoot();
+			if (shootScript != null)
+			{
+				shootScript.shoot();
+			}
 		}
 	}
 }
