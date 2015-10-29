@@ -24,24 +24,28 @@ public class Bullet : MonoBehaviour
 		MoveForward ();
 	}
 
-	protected void doDamage(GameObject target)
+	protected void DoDamage(GameObject target)
 	{
 
 	}
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.CompareTag("Enemy"))
+		if (gameObject.CompareTag("PlayerBullet"))
 		{
-			if (expPrefab != null)
+			if (other.CompareTag("Enemy"))
 			{
-				Instantiate (expPrefab, transform.position, Quaternion.identity);
+				if (expPrefab != null)
+				{
+					Instantiate (expPrefab, transform.position, Quaternion.identity);
+				}
+				DoDamage (other.gameObject);
+				Destroy (gameObject);
 			}
-			Destroy (gameObject);
 		}
 		// Do something with the object hit
 	}
-
+	
 	void MoveForward ()
 	{
 		transform.Translate (new Vector3 (0, Speed * Time.deltaTime, 0));

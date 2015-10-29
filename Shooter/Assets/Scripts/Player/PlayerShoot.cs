@@ -29,7 +29,9 @@ public class PlayerShoot : MonoBehaviour
 		if (currentCD <= 0)
 		{
 			Transform bulL = Instantiate (bullet, leftTurret.transform.position, leftTurret.transform.rotation) as Transform;
+			bulL.tag = "PlayerBullet";
 			Transform bulR = Instantiate (bullet, rightTurret.transform.position, rightTurret.transform.rotation) as Transform;
+			bulR.tag = "PlayerBullet";
 			currentCD = shotCD;
 		}
 	}
