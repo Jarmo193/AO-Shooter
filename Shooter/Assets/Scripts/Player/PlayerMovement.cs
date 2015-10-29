@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour {
 	public float turnFactor = 0.01f;
 	public float maxAngle = 45;
 
+    private Vector3 moveDir;
 	private bool leftMouseClicked = false;
 	public bool MouseClicked
 	{
@@ -25,8 +26,9 @@ public class PlayerMovement : MonoBehaviour {
 	private Rigidbody2D rb;
 
 	void Start ()
-	{
-		originalRotation = transform.rotation.eulerAngles;
+    {
+    moveDir = Vector3.zero;
+    originalRotation = transform.rotation.eulerAngles;
 		rb = GetComponent<Rigidbody2D>();
 	}
 
@@ -55,33 +57,31 @@ public class PlayerMovement : MonoBehaviour {
 
 			Vector3 targetPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 			Vector3 newPos = Vector3.Lerp (rb.transform.position, targetPos, smooth);
+            moveDir = Vector3.Lerp(rb.transform.position, targetPos, smooth*7); // smooth breaking
 			rb.MovePosition (newPos);
 		}
 		else
 		{
+            Vector3 newPos = Vector3.Lerp(rb.transform.position, moveDir, smooth*2); // smooth breaking
+            rb.MovePosition(newPos);
+
 			Vector3 targetPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 			Vector3 angleToTarget =  targetPos - new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, transform.position.z);
 			angleToTarget.Normalize();
 			float rot_z = Mathf.Atan2 (angleToTarget.y, angleToTarget.x) * Mathf.Rad2Deg;
-			GameObject go = new GameObject();
-			go.transform.position = this.transform.position;
-			go.transform.LookAt(new Vector3(targetPos.x, targetPos.y, transform.position.z));
-			go.transform.eulerAngles = new Vector3(0, 0, go.transform.eulerAngles.x);
+            rot_z -= 90;
+            
+			if(transform.eulerAngles.z >= 0 &&
+               transform.eulerAngles.z < maxAngle+10
+               ||
+			   transform.eulerAngles.z <= 360 &&
+               transform.eulerAngles.z > 360 -maxAngle -10)
+                  transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0f, 0f, rot_z), turnFactor);
 
-			Debug.Log("angle to target : "+go.transform.eulerAngles.ToString());
-
-			if(angleToTarget.z < 0)
-			{
-				if(Mathf.Abs(transform.rotation.eulerAngles.z) - Mathf.Abs(originalRotation.z) > (360-maxAngle) ||
-				   Mathf.Abs(transform.rotation.eulerAngles.z) - Mathf.Abs(originalRotation.z) < maxAngle+10)
-					transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, Quaternion.Euler(0f, 0f, rot_z - 90), turnFactor);
-			}
-			else if(angleToTarget.z > 0)
-			{
-				if(Mathf.Abs(transform.rotation.eulerAngles.z) + Mathf.Abs(originalRotation.z) < maxAngle || 
-				   Mathf.Abs(transform.rotation.eulerAngles.z) + Mathf.Abs(originalRotation.z) > 360-maxAngle-10 )
-					transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, Quaternion.Euler(0f, 0f, rot_z - 90), turnFactor);
-			}
-		}
+            if (transform.eulerAngles.z > maxAngle && !(transform.eulerAngles.z > 360 - maxAngle - 20))
+                transform.rotation = Quaternion.Euler(0f, 0f, maxAngle);
+            else if (transform.eulerAngles.z < 360 - maxAngle && !(transform.eulerAngles.z < maxAngle + 20))
+                transform.rotation = Quaternion.Euler(0f, 0f, -maxAngle);
+        }
 	}
 }
