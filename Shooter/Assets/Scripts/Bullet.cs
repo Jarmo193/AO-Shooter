@@ -15,11 +15,21 @@ public class Bullet : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-	
+
+	}
+
+	void FixedUpdate ()
+	{
+		MoveForward ();
 	}
 
 	protected void doDamage(GameObject target)
 	{
 
+	}
+
+	void MoveForward ()
+	{
+		transform.Translate (new Vector3 (0, Speed * Time.deltaTime, 0));
 	}
 }
