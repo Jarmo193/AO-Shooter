@@ -57,8 +57,6 @@ public class Health : MonoBehaviour
 	{
 		int width;
 		int height;
-
-		Debug.Log (position.ToString());
 		
 		if(((int)position.width) %2 == 0)
 			width = (int) Mathf.Abs(position.width);
