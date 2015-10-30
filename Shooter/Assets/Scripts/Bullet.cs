@@ -46,6 +46,18 @@ public class Bullet : MonoBehaviour
 				Destroy (gameObject);
 			}
 		}
+		if (gameObject.CompareTag("EnemyBullet"))
+		{
+			if (other.CompareTag("Player"))
+			{
+				if (expPrefab != null)
+				{
+					Instantiate (expPrefab, transform.position, Quaternion.identity);
+				}
+				DoDamage (other.gameObject);
+				Destroy (gameObject);
+			}
+		}
 		// Do something with the object hit
 	}
 	

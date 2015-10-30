@@ -14,9 +14,8 @@ public class Enemy : MonoBehaviour
 
     protected Vector3 shootDir = Vector3.zero;
 
-<<<<<<< HEAD
 	private int cooldown;
-=======
+
 	private Animator anim;
 	public string PathAnimation
 	{
@@ -26,21 +25,17 @@ public class Enemy : MonoBehaviour
 		}
 		set
 		{
+			if (anim == null) anim = GetComponent<Animator> ();
 			anim.Play(value);
 		}
 	}
->>>>>>> b58ab9b3c4fe8405513b7db9c4694d933907e226
 
 	// Use this for initialization
 	void Start ()
     {
-<<<<<<< HEAD
 		cooldown = weaponCooldown;
 		inverseShootDir ();
-=======
-		anim = GetComponent<Animator> ();
-		inverseShootDir();
->>>>>>> b58ab9b3c4fe8405513b7db9c4694d933907e226
+		if (anim == null) anim = GetComponent<Animator> ();
     }
 
     protected void inverseShootDir()

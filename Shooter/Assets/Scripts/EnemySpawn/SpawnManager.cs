@@ -3,13 +3,20 @@ using System.Collections;
 
 public class SpawnManager : MonoBehaviour {
 
-	public Object enemyShip;
+	public Transform enemyShip;
 
 	private float maxWidth = 6.3f;
 	private float SpawnHeight = 7.95f;
 
-	float RandomX ()
+	void SpawnRandomX ()
 	{
-		return 0f;
+		Transform enemy = Instantiate (enemyShip, new Vector3 (RandomX(), SpawnHeight, -0.1f), Quaternion.Euler(0, 0, 0)) as Transform;
+		enemy.name = "Enemy";
+		enemy.gameObject.GetComponentInChildren<Enemy> ().PathAnimation = "Fly_Down";
+	}
+
+	float RandomX()
+	{
+		return Random.Range (-maxWidth, maxWidth);
 	}
 }
