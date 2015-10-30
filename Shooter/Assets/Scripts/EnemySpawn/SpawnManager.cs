@@ -5,8 +5,8 @@ public class SpawnManager : MonoBehaviour {
 
 	public Transform enemyShip;
 
-	private float maxWidth = 6.3f;
-	private float SpawnHeight = 7.95f;
+	private float maxWidth = 9.67f;
+	private float SpawnHeight = 12.88f;
 
 	void SpawnRandomX ()
 	{
