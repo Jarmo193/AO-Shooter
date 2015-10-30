@@ -25,12 +25,20 @@ public class Health : MonoBehaviour
 
 	private void die()
 	{
-		Destroy (gameObject);
+		if (gameObject.transform.parent)
+		{
+			Destroy (transform.parent.gameObject);
+		}
+		else
+		{
+			Destroy (gameObject);
+		}
 	}
 
 	// Use this for initialization
 	void Start ()
 	{
+		currentHealth = maxHealth;
 		sr = gameObject.GetComponent<SpriteRenderer> ();
 		DrawQuad (new Rect(0, 0, -sr.sprite.rect.width, -10), Color.green);
 		healthContainer = new GameObject ();
