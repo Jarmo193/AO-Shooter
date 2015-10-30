@@ -20,8 +20,17 @@ public class EnemyBurst : Enemy
 
     protected override void shoot() // <- yliajaa Enemy luokan shoot funktion
     {
-        base.shoot(); // <- lisää Enemy luokan shoot funktion tähän funktioon
+        // base.shoot(); // <- lisää Enemy luokan shoot funktion tähän funktioon
+
+		for(int i = 0; i < burstAmount; i++)
+			Invoke ("burst", burstInterval*i);
 
         // oma lisäys/muutos funktioon
     }
+
+	public void burst()
+	{
+		Transform bul = Instantiate(ammoType, transform.position, Quaternion.Euler(transform.eulerAngles + shootDir)) as Transform;
+		bul.tag = "EnemyBullet";
+	}
 }
