@@ -18,14 +18,10 @@ public class Enemy : MonoBehaviour
 	protected Vector3 shootDir = Vector3.zero;
 	protected Vector3 weaponRotation = Vector3.zero;
 
-<<<<<<< HEAD
-	private int cooldown;
-
-=======
 	protected int cooldown;
 
 	private int rotDir = 1;
->>>>>>> bad8d19e1ca2d40076486a2e49be541a1a81771f
+
 	private Animator anim;
 	public string PathAnimation
 	{
@@ -39,26 +35,20 @@ public class Enemy : MonoBehaviour
 			anim.Play(value);
 		}
 	}
-<<<<<<< HEAD
-=======
 
 	void Awake()
 	{
 		Assets.enemies.Add (transform);
 	}
->>>>>>> bad8d19e1ca2d40076486a2e49be541a1a81771f
 
 	// Use this for initialization
 	void Start ()
     {
 		cooldown = weaponCooldown;
 		inverseShootDir ();
-<<<<<<< HEAD
 		if (anim == null) anim = GetComponent<Animator> ();
-=======
 
 		anim = GetComponent<Animator> ();
->>>>>>> bad8d19e1ca2d40076486a2e49be541a1a81771f
     }
 
     protected void inverseShootDir()

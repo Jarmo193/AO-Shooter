@@ -6,12 +6,6 @@ public class EnemyBurst : Enemy
     public float burstInterval = 0.33f; // aikaväli panoksilla sarjatulessa
     public int burstAmount = 3; // sarjan panosten määrä
 
-	// Use this for initialization
-	void Start ()
-    {
-        inverseShootDir();
-    }
-	
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
