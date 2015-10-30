@@ -12,10 +12,24 @@ public class Enemy : MonoBehaviour
 
     protected Vector3 shootDir = Vector3.zero;
 
+	private Animator anim;
+	public string PathAnimation
+	{
+		get
+		{
+			return "Current animation playing";
+		}
+		set
+		{
+			anim.Play(value);
+		}
+	}
+
 	// Use this for initialization
 	void Start ()
     {
-
+		anim = GetComponent<Animator> ();
+		inverseShootDir();
     }
 
     protected void inverseShootDir()
