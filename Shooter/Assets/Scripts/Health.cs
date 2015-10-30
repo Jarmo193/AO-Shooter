@@ -27,10 +27,16 @@ public class Health : MonoBehaviour
 	{
 		if (gameObject.transform.parent)
 		{
+			if(gameObject.transform.parent.name == "Enemy")
+				Assets.enemies.Remove(transform);
+
 			Destroy (transform.parent.gameObject);
 		}
 		else
 		{
+			if(gameObject.transform.name == "EnemyShip")
+				Assets.enemies.Remove(transform);
+
 			Destroy (gameObject);
 		}
 	}

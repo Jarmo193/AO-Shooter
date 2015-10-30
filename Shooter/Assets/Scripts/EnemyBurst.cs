@@ -13,24 +13,23 @@ public class EnemyBurst : Enemy
     }
 	
 	// Update is called once per frame
-	void Update ()
-    {
-	
+	void FixedUpdate ()
+	{
+		cooldown++;
+		if(weaponCooldown <= cooldown)
+		{
+			burst();
+			cooldown = 0;
+		}
 	}
 
-    protected override void shoot() // <- yliajaa Enemy luokan shoot funktion
+    protected void burst() // <- yliajaa Enemy luokan shoot funktion
     {
         // base.shoot(); // <- lisää Enemy luokan shoot funktion tähän funktioon
 
 		for(int i = 0; i < burstAmount; i++)
-			Invoke ("burst", burstInterval*i);
+			Invoke ("shoot", burstInterval*i);
 
         // oma lisäys/muutos funktioon
     }
-
-	public void burst()
-	{
-		Transform bul = Instantiate(ammoType, transform.position, Quaternion.Euler(transform.eulerAngles + shootDir)) as Transform;
-		bul.tag = "EnemyBullet";
-	}
 }
