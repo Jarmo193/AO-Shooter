@@ -8,8 +8,10 @@ public class PlayerMovement : MonoBehaviour {
 	public float turnFactor = 0.01f;
 	public float maxAngle = 45;
 
+	private Animator anim;
+
     private Vector3 moveDir;
-	private bool leftMouseClicked = false;
+	public bool leftMouseClicked = false;
 	public bool MouseClicked
 	{
 		get
@@ -18,6 +20,9 @@ public class PlayerMovement : MonoBehaviour {
 		}
 		set
 		{
+			if (anim == null)
+				anim = GetComponent<Animator> ();
+			anim.SetBool ("focusFire", value);
 			leftMouseClicked = value;
 		}
 	}
@@ -27,6 +32,8 @@ public class PlayerMovement : MonoBehaviour {
 
 	void Start ()
     {
+		if (anim == null)
+			anim = GetComponent<Animator> ();
     moveDir = Vector3.zero;
     originalRotation = transform.rotation.eulerAngles;
 		rb = GetComponent<Rigidbody2D>();

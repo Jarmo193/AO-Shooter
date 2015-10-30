@@ -8,6 +8,8 @@ public class PlayerShoot : MonoBehaviour
 	[HideInInspector]
 	public int currentCD;
 
+	public int damage;
+
 	public Transform leftTurret;
 	public Transform rightTurret;
 
@@ -37,8 +39,10 @@ public class PlayerShoot : MonoBehaviour
 		{
 			Transform bulL = Instantiate (bullet, leftTurret.transform.position, leftTurret.transform.rotation) as Transform;
 			bulL.tag = "PlayerBullet";
+			bulL.GetComponent<StraightShot>().Damage = damage;
 			Transform bulR = Instantiate (bullet, rightTurret.transform.position, rightTurret.transform.rotation) as Transform;
 			bulR.tag = "PlayerBullet";
+			bulR.GetComponent<StraightShot>().Damage = damage;
 			currentCD = shotCD;
 
             if(soundPlayer != null)
