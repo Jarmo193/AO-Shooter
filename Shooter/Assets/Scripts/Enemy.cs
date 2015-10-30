@@ -8,14 +8,24 @@ public class Enemy : MonoBehaviour
 	public int weaponCooldown = 90; // ampumisen aikaväli freimeinä
 	public int bulletAmount = 1; // panosten määrä per laukaus
 	public float bulletSpread = 5.0f; // ammusten väli
+	public float weaponRotationAmount = 0.0f;
+	public bool rotateAlways = false;
+	public bool rotateDir = true; // true = clock wise
 
     /* ie. forward, down, player, behind(miinoja varten) */
     public string shootDirection;
 
-    protected Vector3 shootDir = Vector3.zero;
+	protected Vector3 shootDir = Vector3.zero;
+	protected Vector3 weaponRotation = Vector3.zero;
 
+<<<<<<< HEAD
 	private int cooldown;
 
+=======
+	protected int cooldown;
+
+	private int rotDir = 1;
+>>>>>>> bad8d19e1ca2d40076486a2e49be541a1a81771f
 	private Animator anim;
 	public string PathAnimation
 	{
@@ -29,13 +39,26 @@ public class Enemy : MonoBehaviour
 			anim.Play(value);
 		}
 	}
+<<<<<<< HEAD
+=======
+
+	void Awake()
+	{
+		Assets.enemies.Add (transform);
+	}
+>>>>>>> bad8d19e1ca2d40076486a2e49be541a1a81771f
 
 	// Use this for initialization
 	void Start ()
     {
 		cooldown = weaponCooldown;
 		inverseShootDir ();
+<<<<<<< HEAD
 		if (anim == null) anim = GetComponent<Animator> ();
+=======
+
+		anim = GetComponent<Animator> ();
+>>>>>>> bad8d19e1ca2d40076486a2e49be541a1a81771f
     }
 
     protected void inverseShootDir()
@@ -44,6 +67,18 @@ public class Enemy : MonoBehaviour
         if(shootDir.z > 360)
             shootDir -= new Vector3(0, 0, 360);
     }
+
+	void Update()
+	{
+		if(!rotateDir)
+			rotDir = -1;
+		else
+			rotDir = 1;
+
+		weaponCooldown = (int)(1f / Time.fixedDeltaTime);
+		if (rotateAlways)
+			weaponRotation += (new Vector3 (0, 0, weaponRotationAmount) * rotDir);
+	}
 	
 	// Update is called once per frame
 	void FixedUpdate ()
@@ -56,33 +91,23 @@ public class Enemy : MonoBehaviour
         }
 	}
 
-    protected virtual void shoot() // <- virtual sana override komentoa varten lapsi luokissa
+    protected void shoot() // <- virtual sana override komentoa varten lapsi luokissa
 	{
-		/*
-		// spread = ammusten väli
-		_global.multiShotPlayer = function(Name:String, spd:Number, Dir:Number, Spread:Number, Amount:Number):Void
-		{
-			var obj:Object = {x:0,y:0};
-			player.player_mc.localToGlobal(obj);
-			
-			for(var temp = (-Amount/2); temp < (Amount/2); temp++)
-			{
-				_global.McBul[_global.bulAmount] = allBullets.createNew(Name, spd, obj.x, obj.y, (Dir + (temp*Spread) + (Spread/2)));
-			}
-		}
-		*/
 		if(bulletAmount > 1)
 		{
 			for(float temp = (float)((float)-bulletAmount/2); temp < (float)((float)bulletAmount/2); temp++)
 			{
-				Transform bul = Instantiate(ammoType, transform.position, Quaternion.Euler(transform.eulerAngles + shootDir + new Vector3(0, 0, (temp*bulletSpread) + (bulletSpread/2)))) as Transform;
+				Transform bul = Instantiate(ammoType, transform.position, Quaternion.Euler(transform.eulerAngles + weaponRotation + shootDir + new Vector3(0, 0, (temp*bulletSpread) + (bulletSpread/2)))) as Transform;
 				bul.tag = "EnemyBullet";
 			}
 		}
 		else
 		{
-	        Transform bul = Instantiate(ammoType, transform.position, Quaternion.Euler(transform.eulerAngles + shootDir)) as Transform;
+			Transform bul = Instantiate(ammoType, transform.position, Quaternion.Euler(transform.eulerAngles +  weaponRotation + shootDir)) as Transform;
 	        bul.tag = "EnemyBullet";
 		}
+		
+		if (!rotateAlways)
+			weaponRotation += new Vector3 (0, 0, weaponRotationAmount);
     }
 }
