@@ -21,7 +21,6 @@ public class Enemy : MonoBehaviour
 	protected int cooldown;
 
 	private int rotDir = 1;
-
 	private Animator anim;
 	public string PathAnimation
 	{

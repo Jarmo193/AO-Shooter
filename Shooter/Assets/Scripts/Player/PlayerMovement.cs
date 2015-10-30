@@ -8,7 +8,11 @@ public class PlayerMovement : MonoBehaviour {
 	public float turnFactor = 0.01f;
 	public float maxAngle = 45;
 
+<<<<<<< HEAD
+	public float maxSpeed = 0.02f;
+=======
 	private Animator anim;
+>>>>>>> 63e545102d3e7f14a268ad37793665a82c486aeb
 
     private Vector3 moveDir;
 	public bool leftMouseClicked = false;
@@ -50,7 +54,7 @@ public class PlayerMovement : MonoBehaviour {
 		{
 			if(transform.rotation.eulerAngles.z != originalRotation.z)
 			{
-				if(transform.eulerAngles.z > 300)
+				if(transform.eulerAngles.z > 180)
 					transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, 0, 359.9f), turnFactor);
 				else
 					transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, originalRotation, turnFactor);
@@ -64,7 +68,46 @@ public class PlayerMovement : MonoBehaviour {
 
 			Vector3 targetPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 			Vector3 newPos = Vector3.Lerp (rb.transform.position, targetPos, smooth);
-            moveDir = Vector3.Lerp(rb.transform.position, targetPos, smooth*7); // smooth breaking
+
+			Vector3 angleToTarget =  newPos - new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, transform.position.z);
+			float distanceToTarget = angleToTarget.magnitude;
+
+			bool outOfBounds = false;
+			float percent = 1f;
+			if(newPos.x > maxSpeed && newPos.y > maxSpeed ||
+			   newPos.x < -maxSpeed && newPos.y < -maxSpeed)
+			{
+				if(newPos.x > newPos.y)
+				{
+					percent = maxSpeed / newPos.x;
+				}
+				else
+				{
+					percent = maxSpeed / newPos.y;
+				}
+
+				outOfBounds = true;
+			}
+			else if(newPos.x > maxSpeed || newPos.x < -maxSpeed)
+			{
+				percent = maxSpeed / newPos.x;
+				
+				outOfBounds = true;
+			}
+			else if(newPos.y > maxSpeed || newPos.y < -maxSpeed)
+			{
+				percent = maxSpeed / newPos.y;
+				
+				outOfBounds = true;
+			}
+
+			if(outOfBounds)
+			{
+				newPos += transform.position;
+				newPos *= percent;
+			}
+			
+			moveDir = Vector3.Lerp(rb.transform.position, targetPos, smooth*7); // smooth breaking
 			rb.MovePosition (newPos);
 		}
 		else
