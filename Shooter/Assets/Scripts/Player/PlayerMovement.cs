@@ -8,11 +8,8 @@ public class PlayerMovement : MonoBehaviour {
 	public float turnFactor = 0.01f;
 	public float maxAngle = 45;
 
-<<<<<<< HEAD
 	public float maxSpeed = 0.02f;
-=======
 	private Animator anim;
->>>>>>> 63e545102d3e7f14a268ad37793665a82c486aeb
 
     private Vector3 moveDir;
 	public bool leftMouseClicked = false;
@@ -71,7 +68,7 @@ public class PlayerMovement : MonoBehaviour {
 
 			Vector3 angleToTarget =  newPos - new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, transform.position.z);
 			float distanceToTarget = angleToTarget.magnitude;
-
+			/*
 			bool outOfBounds = false;
 			float percent = 1f;
 			if(newPos.x > maxSpeed && newPos.y > maxSpeed ||
@@ -106,7 +103,7 @@ public class PlayerMovement : MonoBehaviour {
 				newPos += transform.position;
 				newPos *= percent;
 			}
-			
+			*/
 			moveDir = Vector3.Lerp(rb.transform.position, targetPos, smooth*7); // smooth breaking
 			rb.MovePosition (newPos);
 		}
