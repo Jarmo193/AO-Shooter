@@ -10,9 +10,16 @@ public class PlayerShoot : MonoBehaviour
 
 	public Transform leftTurret;
 	public Transform rightTurret;
-	// Use this for initialization
-	void Start () {
 
+    public AudioClip soundSFX;
+    private AudioSource soundPlayer;
+    // Use this for initialization
+    void Start ()
+    {
+        if(soundSFX != null)
+        {
+            soundPlayer = gameObject.GetComponent<AudioSource>();
+        }
 	}
 	
 	// Update is called once per frame
@@ -33,6 +40,11 @@ public class PlayerShoot : MonoBehaviour
 			Transform bulR = Instantiate (bullet, rightTurret.transform.position, rightTurret.transform.rotation) as Transform;
 			bulR.tag = "PlayerBullet";
 			currentCD = shotCD;
+
+            if(soundPlayer != null)
+            {
+                soundPlayer.PlayOneShot(soundSFX);
+            }
 		}
 	}
 }
